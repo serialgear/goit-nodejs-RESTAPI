@@ -7,13 +7,7 @@ const updateById = async (req, res) => {
   if (!result) {
     throw createError(404, "Not found");
   }
-  res.status(200).json({
-    status: "success",
-    code: 200,
-    data: {
-      result,
-    },
-  });
+  res.status(200).json(result);
 };
 
 module.exports = updateById;
