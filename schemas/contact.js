@@ -5,11 +5,14 @@ const contactSchema = Joi.object({
   phone: Joi.string()
     .pattern(/^\(\d{3}\) \d{3}-\d{4}$/)
     .required(),
+  favorite: Joi.bool(),
 });
 
 const favoriteSchema = Joi.object({
   favorite: Joi.bool().required(),
 });
 
-module.exports = contactSchema;
-module.exports = favoriteSchema;
+module.exports = {
+  contactSchema,
+  favoriteSchema,
+};
