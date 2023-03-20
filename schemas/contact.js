@@ -12,7 +12,15 @@ const favoriteSchema = Joi.object({
   favorite: Joi.bool().required(),
 });
 
+const updateSchema = Joi.object({
+  name: Joi.string().min(3).max(20),
+  email: Joi.string().email(),
+  phone: Joi.string().pattern(/^\(\d{3}\) \d{3}-\d{4}$/),
+  favorite: Joi.bool(),
+});
+
 module.exports = {
   contactSchema,
   favoriteSchema,
+  updateSchema,
 };
