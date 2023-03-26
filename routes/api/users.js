@@ -10,7 +10,7 @@ const { joiSchema, joiSubscriptionSchema } = require("../../models/users");
 router.post("/register", validation(joiSchema), ctrlWrapper(ctrl.register));
 router.post("/login", validation(joiSchema), ctrlWrapper(ctrl.login));
 router.get("/current", auth, ctrl.getCurrent);
-router.get("/logout", auth, ctrlWrapper(ctrl.logout));
+router.post("/logout", auth, ctrlWrapper(ctrl.logout));
 router.patch(
   "/",
   auth,
