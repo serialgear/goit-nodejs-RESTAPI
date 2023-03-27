@@ -2,22 +2,23 @@ const express = require("express");
 
 const router = express.Router();
 
-const { validation, ctrlWrapper } = require("../../middlewares");
+const { validation, ctrlWrapper, auth } = require("../../middlewares");
 const {
-  contactSchema,
-  favoriteSchema,
-  updateSchema,
-} = require("../../schemas");
+  joiContactSchema,
+  joiFavoriteSchema,
+  joiUpdateSchema,
+} = require("../../models/contacts");
 
 const { contacts: ctrl } = require("../../controllers");
 
-router.get("/", ctrlWrapper(ctrl.getAll));
+router.get("/", auth, ctrlWrapper(ctrl.getAll));
 
 router.get("/:contactId", ctrlWrapper(ctrl.getById));
 
 router.post(
   "/",
-  validation(contactSchema, "missing required field"),
+  auth,
+  validation(joiContactSchema, "missing required field"),
   ctrlWrapper(ctrl.add)
 );
 
@@ -25,13 +26,13 @@ router.delete("/:contactId", ctrlWrapper(ctrl.remove));
 
 router.put(
   "/:contactId",
-  validation(updateSchema, "missing fields"),
+  validation(joiUpdateSchema, "missing fields"),
   ctrlWrapper(ctrl.updateById)
 );
 
 router.patch(
   "/:contactId/favorite",
-  validation(favoriteSchema, "missing field"),
+  validation(joiFavoriteSchema, "missing field"),
   ctrlWrapper(ctrl.updateStatusContact)
 );
 module.exports = router;
