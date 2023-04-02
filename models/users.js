@@ -21,6 +21,12 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    avatarURL: {
+      type: String,
+      default:
+        "https://www.gravatar.com/avatar/069c9ab958ccd1b5881fb39c3d9c01ba",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -30,6 +36,10 @@ const User = model("user", userSchema);
 const joiSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().min(6).required(),
+  subscription: Joi.string()
+    .valid("starter", "pro", "business")
+    .allow("")
+    .optional(),
 });
 
 const joiSubscriptionSchema = Joi.object({
