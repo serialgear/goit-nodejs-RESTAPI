@@ -5,12 +5,23 @@ const router = express.Router();
 const { validation, ctrlWrapper, auth, upload } = require("../../middlewares");
 
 const { users: ctrl } = require("../../controllers");
-const { joiSchema, joiSubscriptionSchema } = require("../../models/users");
+const {
+  joiSchema,
+  joiSubscriptionSchema,
+  emailSchema,
+} = require("../../models/users");
 
 router.post("/register", validation(joiSchema), ctrlWrapper(ctrl.register));
 router.post("/login", validation(joiSchema), ctrlWrapper(ctrl.login));
-router.get("/current", auth, ctrl.getCurrent);
 router.post("/logout", auth, ctrlWrapper(ctrl.logout));
+router.post(
+  "/verify",
+  validation(emailSchema),
+  ctrlWrapper(ctrl.resendVerifyEmail)
+);
+router.get("/current", auth, ctrl.getCurrent);
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
 router.patch(
   "/",
   auth,

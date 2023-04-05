@@ -27,6 +27,15 @@ const userSchema = Schema(
         "https://www.gravatar.com/avatar/069c9ab958ccd1b5881fb39c3d9c01ba",
       required: true,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      default: "",
+      //  required: [true, "V erify token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -46,4 +55,8 @@ const joiSubscriptionSchema = Joi.object({
   subscription: Joi.string().allow("starter", "pro", "business"),
 });
 
-module.exports = { User, joiSchema, joiSubscriptionSchema };
+const emailSchema = Joi.object({
+  email: Joi.string().required(),
+});
+
+module.exports = { User, joiSchema, joiSubscriptionSchema, emailSchema };
